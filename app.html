@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitxo Fora</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="barra">
+    <div class="logo">🐛 Bitxo Fora <span class="rol amagat" id="etiqueta-rol"></span></div>
+    <button class="hamburguesa" id="btn-hamburguesa">☰</button>
+    <nav class="menu" id="menu-principal">
+      <button data-vista="nou" id="nav-nou">Nou registre</button>
+      <button data-vista="historial" id="nav-historial">Historial</button>
+      <button data-vista="estadistiques" id="nav-estadistiques">Estadístiques</button>
+      <button data-vista="usuaris" id="nav-usuaris">Usuaris</button>
+      <button id="btn-sortir">Sortir</button>
+    </nav>
+  </div>
+</header>
+
+<main class="contenidor">
+
+  <!-- VISTA: NOU REGISTRE -->
+  <section id="vista-nou" class="vista amagat">
+    <div class="targeta">
+      <h2 id="titol-form-nou">Nou registre</h2>
+      <form id="form-esdeveniment">
+        <input type="hidden" id="ev-id">
+
+        <div class="camp">
+          <label for="ev-tipus">Tipus d'esdeveniment</label>
+          <select id="ev-tipus" required>
+            <option value="inici_dissociacio">Inici dissociació</option>
+            <option value="final_dissociacio">Final dissociació</option>
+            <option value="presa_medicacio">Presa medicació</option>
+            <option value="altres">Altres</option>
+          </select>
+        </div>
+
+        <div class="camp">
+          <label for="ev-data">Hora i dia</label>
+          <input type="datetime-local" id="ev-data" required>
+        </div>
+
+        <!-- Camps INICI / FINAL dissociació -->
+        <div class="grup-camps" data-grup="dissociacio">
+          <div class="camp">
+            <label id="etiqueta-detonant" for="ev-detonant">Possible detonant</label>
+            <input type="text" id="ev-detonant">
+          </div>
+        </div>
+
+        <!-- Camps PRESA MEDICACIÓ -->
+        <div class="grup-camps amagat" data-grup="medicacio">
+          <div class="camp">
+            <label>Medicació presa</label>
+            <div class="caselles">
+              <label><input type="checkbox" name="medicament" value="Heipram"> Heipram</label>
+              <label><input type="checkbox" name="medicament" value="Quetiapina (1/2)"> Quetiapina (1/2)</label>
+              <label><input type="checkbox" name="medicament" value="Quetiapina (sencera)"> Quetiapina (sencera)</label>
+              <label><input type="checkbox" name="medicament" value="Orfidal"> Orfidal</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Camps ALTRES -->
+        <div class="grup-camps amagat" data-grup="altres">
+          <div class="camp">
+            <label for="ev-resum">Resum</label>
+            <input type="text" id="ev-resum" placeholder="Breu, per identificar el registre">
+          </div>
+        </div>
+
+        <div class="camp">
+          <label id="etiqueta-observacions" for="ev-observacions">Observacions</label>
+          <textarea id="ev-observacions"></textarea>
+        </div>
+
+        <p class="error amagat" id="form-error"></p>
+
+        <div style="display:flex; gap:0.6rem;">
+          <button type="submit" class="principal">Desar</button>
+          <button type="button" class="secundari amagat" id="btn-cancelar-edicio">Cancel·lar edició</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- VISTA: HISTORIAL -->
+  <section id="vista-historial" class="vista amagat">
+    <div class="targeta">
+      <h2>Historial d'esdeveniments</h2>
+      <div id="llista-historial">Carregant…</div>
+    </div>
+  </section>
+
+  <!-- VISTA: ESTADÍSTIQUES -->
+  <section id="vista-estadistiques" class="vista amagat">
+    <div class="targeta">
+      <h2>Estadístiques</h2>
+      <div id="contingut-estadistiques">Carregant…</div>
+    </div>
+  </section>
+
+  <!-- VISTA: USUARIS -->
+  <section id="vista-usuaris" class="vista amagat">
+    <div class="targeta">
+      <h2>Gestió d'usuaris</h2>
+      <p style="color:var(--text-suau); font-size:0.9rem;">Els nous membres es donen d'alta des de la pantalla d'accés (\"Registra't\"). Aquí pots assignar-los el rol correcte.</p>
+      <div id="taula-usuaris">Carregant…</div>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
