@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitxo Fora · Defineix la teva contrasenya</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="pantalla-login">
+  <div class="caixa-login">
+    <h1>🐛 Bitxo Fora</h1>
+    <p class="subtitol">Benvingut/da! Tria la teva contrasenya</p>
+
+    <div id="carregant">Comprovant la invitació…</div>
+
+    <form id="form-contrasenya" class="amagat">
+      <div class="camp">
+        <label for="password1">Nova contrasenya</label>
+        <input type="password" id="password1" required autocomplete="new-password">
+      </div>
+      <div class="camp">
+        <label for="password2">Repeteix-la</label>
+        <input type="password" id="password2" required autocomplete="new-password">
+      </div>
+      <ul id="requisits" style="font-size:0.85rem; color:var(--text-suau); padding-left:1.1rem; margin-top:-0.4rem;">
+        <li id="req-longitud">Mínim 8 caràcters</li>
+        <li id="req-minuscula">Una lletra minúscula</li>
+        <li id="req-majuscula">Una lletra majúscula</li>
+        <li id="req-numero">Un número</li>
+        <li id="req-simbol">Un símbol (per exemple: ! · @ · # · %)</li>
+      </ul>
+      <p class="error amagat" id="error-contrasenya"></p>
+      <button type="submit" class="principal" style="width:100%">Desar contrasenya i entrar</button>
+    </form>
+
+    <p class="error amagat" id="error-enllac">Aquest enllaç no és vàlid o ha caducat. Demana una nova invitació al superadministrador.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script type="module" src="js/definir-contrasenya.js"></script>
+</body>
+</html>

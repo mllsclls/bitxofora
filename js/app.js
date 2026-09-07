@@ -395,7 +395,7 @@ function configurarFormulariCrearUsuari() {
 
     const nom = document.getElementById("nou-nom").value.trim();
     const email = document.getElementById("nou-email").value.trim();
-    const password = document.getElementById("nou-password").value;
+    const redirectUrl = window.location.origin + "/definir-contrasenya.html";
 
     const { data: sessio } = await supabase.auth.getSession();
 
@@ -406,7 +406,7 @@ function configurarFormulariCrearUsuari() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessio.session.access_token}`
         },
-        body: JSON.stringify({ nom, email, password })
+        body: JSON.stringify({ nom, email, redirectUrl })
       });
       const resultat = await resp.json();
 

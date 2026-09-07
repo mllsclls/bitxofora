@@ -23,12 +23,14 @@ No hi ha pas de compilació (*build step*): és HTML/CSS/JS pla amb mòduls ES i
 El registre públic està **desactivat**: ningú es pot donar d'alta pel seu compte. Les altes les fa el superadministrador des de la mateixa app:
 
 1. Entra amb el compte de superusuari → pestanya **Usuaris**.
-2. Omple nom, correu i una contrasenya provisional (la persona la podrà canviar després amb "Oblidat la contrasenya" si es configura, o li'n doneu una altra manualment).
-3. Prem "Crear usuari".
+2. Omple nom i correu, i prem "Crear usuari".
+3. La persona rep un correu d'invitació i tria ella mateixa la contrasenya a `definir-contrasenya.html` (mínim 8 caràcters, amb minúscula, majúscula, número i símbol — validat abans d'enviar-se).
 
 Per sota, això crida a una *Edge Function* (`crear-usuari`, desplegada al projecte Supabase) que:
 - Comprova, amb el token de qui fa la petició, que efectivament és `superusuari` (consulta la taula `profiles` amb les credencials de qui truca, no amb privilegis d'administrador).
-- Només si això es compleix, crea el compte fent servir la clau de servei (`service_role`), que **no surt mai del servidor** ni és accessible des del navegador.
+- Només si això es compleix, envia la invitació fent servir la clau de servei (`service_role`), que **no surt mai del servidor** ni és accessible des del navegador.
+
+**⚠️ Pas manual pendent, un cop tinguis el lloc desplegat amb una URL fixa:** vés a Supabase → **Authentication → URL Configuration → Redirect URLs** i afegeix `https://<la-teva-url>/definir-contrasenya.html` (i, si vols provar-ho en local, `http://localhost:<port>/definir-contrasenya.html`). Sense això, l'enllaç de l'invitació no podrà redirigir correctament.
 
 Alternativa manual (sempre disponible): Supabase → **Authentication → Users → Add user**. El trigger de la base de dades li crearà el perfil igualment (rol `usuari` per defecte, a reassignar des de la pestanya Usuaris).
 
