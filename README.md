@@ -18,11 +18,20 @@ bitxofora/
 
 No hi ha pas de compilació (*build step*): és HTML/CSS/JS pla amb mòduls ES i el client `@supabase/supabase-js` carregat per CDN. Es pot servir des de qualsevol hosting estàtic (Vercel, Netlify, GitHub Pages, etc.) o simplement obrint-ho amb un servidor local (`npx serve .`).
 
-## Com arrenca el sistema (primer ús)
+## Alta d'usuaris (registre tancat)
 
-1. Desplega el lloc (o obre'l en local).
-2. La primera persona que faci "Registra't" es converteix **automàticament en superusuari** (arrencada del sistema — ho fa un trigger a la base de dades). Les següents persones que es registrin entren amb rol `usuari` per defecte.
-3. Un cop dins, el superusuari va a la pestanya **Usuaris** i assigna el rol correcte (Usuari / Familiar / Superusuari) a cada membre de la família.
+El registre públic està **desactivat**: ningú es pot donar d'alta des de la web. Totes les altes les fa el superadministrador des del panell de Supabase:
+
+1. Supabase → projecte `bitxofora` → **Authentication → Users → Add user → Create new user**.
+2. Omple correu i contrasenya (marca "Auto Confirm User" perquè no calgui confirmar per correu).
+3. El trigger de la base de dades li crea automàticament el perfil (per defecte amb rol `usuari`).
+4. Entra a l'app amb el superadministrador → pestanya **Usuaris** → assigna-li el rol correcte (Usuari / Familiar / Superusuari).
+
+Cal desactivar el registre públic un sol cop des del panell: **Authentication → Sign In / Providers → Email → desactiva "Allow new users to sign up"**.
+
+## Primer superadministrador
+
+El primer compte que s'insereix a `auth.users` (via el panell, com s'explica a dalt) es converteix **automàticament en superusuari** (arrencada del sistema — ho fa un trigger a la base de dades). Els següents entren amb rol `usuari` per defecte i cal reassignar-los des de la pestanya Usuaris.
 
 ## Rols
 
