@@ -18,16 +18,19 @@ bitxofora/
 
 No hi ha pas de compilació (*build step*): és HTML/CSS/JS pla amb mòduls ES i el client `@supabase/supabase-js` carregat per CDN. Es pot servir des de qualsevol hosting estàtic (Vercel, Netlify, GitHub Pages, etc.) o simplement obrint-ho amb un servidor local (`npx serve .`).
 
-## Alta d'usuaris (registre tancat)
+## Alta d'usuaris
 
-El registre públic està **desactivat**: ningú es pot donar d'alta des de la web. Totes les altes les fa el superadministrador des del panell de Supabase:
+El registre públic està **desactivat**: ningú es pot donar d'alta pel seu compte. Les altes les fa el superadministrador des de la mateixa app:
 
-1. Supabase → projecte `bitxofora` → **Authentication → Users → Add user → Create new user**.
-2. Omple correu i contrasenya (marca "Auto Confirm User" perquè no calgui confirmar per correu).
-3. El trigger de la base de dades li crea automàticament el perfil (per defecte amb rol `usuari`).
-4. Entra a l'app amb el superadministrador → pestanya **Usuaris** → assigna-li el rol correcte (Usuari / Familiar / Superusuari).
+1. Entra amb el compte de superusuari → pestanya **Usuaris**.
+2. Omple nom, correu i una contrasenya provisional (la persona la podrà canviar després amb "Oblidat la contrasenya" si es configura, o li'n doneu una altra manualment).
+3. Prem "Crear usuari".
 
-Cal desactivar el registre públic un sol cop des del panell: **Authentication → Sign In / Providers → Email → desactiva "Allow new users to sign up"**.
+Per sota, això crida a una *Edge Function* (`crear-usuari`, desplegada al projecte Supabase) que:
+- Comprova, amb el token de qui fa la petició, que efectivament és `superusuari` (consulta la taula `profiles` amb les credencials de qui truca, no amb privilegis d'administrador).
+- Només si això es compleix, crea el compte fent servir la clau de servei (`service_role`), que **no surt mai del servidor** ni és accessible des del navegador.
+
+Alternativa manual (sempre disponible): Supabase → **Authentication → Users → Add user**. El trigger de la base de dades li crearà el perfil igualment (rol `usuari` per defecte, a reassignar des de la pestanya Usuaris).
 
 ## Primer superadministrador
 

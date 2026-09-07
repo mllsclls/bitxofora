@@ -380,8 +380,56 @@ function formatDuracio(minuts) {
   return `${h} h ${m} min`;
 }
 
+let formCrearUsuariConfigurat = false;
+
+function configurarFormulariCrearUsuari() {
+  if (formCrearUsuariConfigurat) return;
+  formCrearUsuariConfigurat = true;
+
+  document.getElementById("form-crear-usuari").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const errorEl = document.getElementById("crear-usuari-error");
+    const okEl = document.getElementById("crear-usuari-ok");
+    errorEl.classList.add("amagat");
+    okEl.classList.add("amagat");
+
+    const nom = document.getElementById("nou-nom").value.trim();
+    const email = document.getElementById("nou-email").value.trim();
+    const password = document.getElementById("nou-password").value;
+
+    const { data: sessio } = await supabase.auth.getSession();
+
+    try {
+      const resp = await fetch(`https://dwcaeupgnwqugmjzkjls.supabase.co/functions/v1/crear-usuari`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessio.session.access_token}`
+        },
+        body: JSON.stringify({ nom, email, password })
+      });
+      const resultat = await resp.json();
+
+      if (!resp.ok) {
+        errorEl.textContent = resultat.error || "No s'ha pogut crear l'usuari.";
+        errorEl.classList.remove("amagat");
+        return;
+      }
+
+      okEl.classList.remove("amagat");
+      document.getElementById("form-crear-usuari").reset();
+      carregarUsuaris();
+    } catch (err) {
+      errorEl.textContent = "Error de connexió: " + err.message;
+      errorEl.classList.remove("amagat");
+    }
+  });
+}
+
 // ---------- Usuaris (superusuari) ----------
 async function carregarUsuaris() {
+  configurarFormulariCrearUsuari();
+
   const cont = document.getElementById("taula-usuaris");
   cont.textContent = "Carregant…";
 

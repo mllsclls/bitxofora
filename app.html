@@ -109,8 +109,28 @@
   <!-- VISTA: USUARIS -->
   <section id="vista-usuaris" class="vista amagat">
     <div class="targeta">
+      <h2>Crear nou usuari</h2>
+      <form id="form-crear-usuari">
+        <div class="camp">
+          <label for="nou-nom">Nom</label>
+          <input type="text" id="nou-nom" required>
+        </div>
+        <div class="camp">
+          <label for="nou-email">Correu electrònic</label>
+          <input type="email" id="nou-email" required>
+        </div>
+        <div class="camp">
+          <label for="nou-password">Contrasenya provisional</label>
+          <input type="text" id="nou-password" required minlength="6" placeholder="Mínim 6 caràcters">
+        </div>
+        <p class="error amagat" id="crear-usuari-error"></p>
+        <p class="avis amagat" id="crear-usuari-ok">Usuari creat correctament.</p>
+        <button type="submit" class="principal">Crear usuari</button>
+      </form>
+    </div>
+
+    <div class="targeta">
       <h2>Gestió d'usuaris</h2>
-      <p style="color:var(--text-suau); font-size:0.9rem;">Els nous membres es donen d'alta des de la pantalla d'accés (\"Registra't\"). Aquí pots assignar-los el rol correcte.</p>
       <div id="taula-usuaris">Carregant…</div>
     </div>
   </section>
